@@ -262,7 +262,7 @@ Template Name: Home
 
         <section class="faq text--center py--10 bg--gray">
             <div class="container">
-                <h2 class="mb--2 text--secondary">FAQ</h2>
+                <h2 class="mb--2 text--secondary"><?php echo get_sub_field('faqs1');?></h2>
                 <p class="mb--5">
                     Problems trying to resolve 
                     the conflict between the 
@@ -270,96 +270,60 @@ Template Name: Home
                     physics: Newtonian mechanics
                 </p>
                 <div class="faq__wrapper">
+                <?php
+                    $args = array(
+                        'post_type' => 'Physionics',
+                        'posts_per_page' => 10,
+                        'tax_query' => array(
+                          array(
+                            'taxonomy' => 'category',
+                            'field' => 'slug',
+                            'terms' => 'faqs'
+                          )
+                        )
+                    );
+                    $newQuery = new WP_Query($args);
+                    ?>        
+
+       <?php if($newQuery->have_posts()) : while($newQuery->have_posts()) : $newQuery->the_post(); ?>
+       <?php if(get_field('frequently_asked')) :while(the_repeater_field('frequently_asked')):?>
                     <div class="faq__items text--left bg--light">
+
                         <ul class="d--flex">
-                        <li><img src="<?php echo get_template_directory_uri()?>../img/arrow-right.png" alt=""></li>
+                        <li> <?php 
+            $image = get_sub_field('frequently_img');
+  
+            if(!empty($image)):
+          ?>
+          <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image['alt']); ?>">
+          <?php endif; ?>
+        
+             </li>
                             <li>
-                                <h4 class="text--secondary">the qucik fox jumps over the lazy dog</h4>
-                                <p>Things on a very small scale ...</p>
+                                <h4 class="text--secondary"><?php echo get_sub_field('frequently_asked1');?></h4>
+                                <p><?php echo get_sub_field('frequently_asked2');?></p>
                             </li>
                         </ul>
+
+                        <?php 
+
+                        endwhile;
+                            else : 
+                                echo "no available post yet";
+                        endif;
+                            wp_reset_postdata();
+
+                        ?>
                     </div>
-                    <div class="faq__items text--left bg--light">
-                        <ul class="d--flex">
-                        <li><img src="<?php echo get_template_directory_uri()?>../img/arrow-right.png" alt=""></li>
-                            <li>
-                                <h4 class="text--secondary">the qucik fox jumps over the lazy dog</h4>
-                                <p>Things on a very small scale ...</p>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="faq__items text--left bg--light">
-                        <ul class="d--flex">
-                        <li><img src="<?php echo get_template_directory_uri()?>../img/arrow-right.png" alt=""></li>
-                            <li>
-                                <h4 class="text--secondary">the qucik fox jumps over the lazy dog</h4>
-                                <p>Things on a very small scale ...</p>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="faq__items text--left bg--light">
-                        <ul class="d--flex">
-                        <li><img src="<?php echo get_template_directory_uri()?>../img/arrow-right.png" alt=""></li>
-                            <li>
-                                <h4 class="text--secondary">the qucik fox jumps over the lazy dog</h4>
-                                <p>Things on a very small scale ...</p>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="faq__items text--left bg--light">
-                        <ul class="d--flex">
-                        <li><img src="<?php echo get_template_directory_uri()?>../img/arrow-right.png" alt=""></li>
-                            <li>
-                                <h4 class="text--secondary">the qucik fox jumps over the lazy dog</h4>
-                                <p>Things on a very small scale ...</p>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="faq__items text--left bg--light">
-                        <ul class="d--flex">
-                        <li><img src="<?php echo get_template_directory_uri()?>../img/arrow-right.png" alt=""></li>
-                            <li>
-                                <h4 class="text--secondary">the qucik fox jumps over the lazy dog</h4>
-                                <p>Things on a very small scale ...</p>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="faq__items text--left bg--light">
-                        <ul class="d--flex">
-                        <li><img src="<?php echo get_template_directory_uri()?>../img/arrow-right.png" alt=""></li>
-                            <li>
-                                <h4 class="text--secondary">the qucik fox jumps over the lazy dog</h4>
-                                <p>Things on a very small scale ...</p>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="faq__items text--left bg--light">
-                        <ul class="d--flex">
-                        <li><img src="<?php echo get_template_directory_uri()?>../img/arrow-right.png" alt=""></li>
-                            <li>
-                                <h4 class="text--secondary">the qucik fox jumps over the lazy dog</h4>
-                                <p>Things on a very small scale ...</p>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="faq__items text--left bg--light">
-                        <ul class="d--flex">
-                        <li><img src="<?php echo get_template_directory_uri()?>../img/arrow-right.png" alt=""></li>
-                            <li>
-                                <h4 class="text--secondary">the qucik fox jumps over the lazy dog</h4>
-                                <p>Things on a very small scale ...</p>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="faq__items text--left bg--light">
-                        <ul class="d--flex">
-                        <li><img src="<?php echo get_template_directory_uri()?>../img/arrow-right.png" alt=""></li>
-                            <li>
-                                <h4 class="text--secondary">the qucik fox jumps over the lazy dog</h4>
-                                <p>Things on a very small scale ...</p>
-                            </li>
-                        </ul>
-                    </div>
+                          <?php 
+
+                            endwhile;
+                                else : 
+                                    echo "no available post yet";
+                            endif;
+                                wp_reset_postdata();
+
+                            ?>
                 </div>
             </div>
 
@@ -367,117 +331,351 @@ Template Name: Home
 
         <section class="pricing text--center py--10 bg--gray">
             <div class="container">
-                <h2 class="mb--2 text--secondary">Pricing</h2>
+                <h2 class="mb--2 text--secondary"><?php echo get_field('pricing1');?></h2>
                 <p class="t--bold mb--5">
-                    Problems trying to resolve 
-                    the conflict between the two major 
-                    realms of Classical physics: 
-                    Newtonian mechanics
+                <?php echo get_field('pricing2');?>
                 </p>
             
                 <div class="pricing__wrapper">
                     <div class="pricing__items p--3 my--3 bg--light">
-                        <h3 class="text--secondary mb--3">FREE</h3>
-                        <p class="t--bold mb--2">Organize across all apps by hand</p>
+                        <h3 class="text--secondary mb--3"><?php echo get_field('desc1');?></h3>
+                        <p class="t--bold mb--2"><?php echo get_field('desc2');?></p>
                         <ul class="amount text--primary d--flex justify--center align--center mb--2">
-                            <li><h4>0</h4></li>
+                            <li><h4><?php echo get_field('desc3');?></h4></li>
                             <li class="text--left">
-                                <p class="t--bold"><small>$</small></p>
-                                <p><small>Per Month</small></p>
+                                <p class="t--bold"><small><?php echo get_field('desc4');?></small></p>
+                                <p><small><?php echo get_field('desc5');?></small></p>
                             </li>
                         </ul>
+
+                        <?php
+                    $args = array(
+                        'post_type' => 'Physionics',
+                        'posts_per_page' => 5,
+                        'tax_query' => array(
+                          array(
+                            'taxonomy' => 'category',
+                            'field' => 'slug',
+                            'terms' => 'cards'
+                          )
+                        )
+                    );
+                    $newQuery = new WP_Query($args);
+                    ?>  
+                    <?php if($newQuery->have_posts()) : while($newQuery->have_posts()) : $newQuery->the_post(); ?>
+                    <?php if(get_field('card_contents')) :while(the_repeater_field('card_contents')):?>
                         <ul class="includes mb--3">
                             <li>
-                                <img src="/img/list-style-main.png" alt="">
-                                <p class="text--secondary">Unlimited product updates</p>
+                            <?php 
+                $image = get_sub_field('img1');
+    
+                if(!empty($image)):
+            ?>
+            <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image['alt']); ?>">
+            <?php endif; ?>
+        
+                                 <p><?php echo get_sub_field('content1');?></p>
                             </li>
                             <li>
-                                <img src="/img/list-style-main.png" alt="">
-                                <p class="text--secondary">Unlimited product updates</p>
+
+                            <?php 
+                $image = get_sub_field('img1');
+    
+                if(!empty($image)):
+            ?>
+            <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image['alt']); ?>">
+            <?php endif; ?>
+        
+                                 <p><?php echo get_sub_field('content2');?></p>
+                                
                             </li>
                             <li>
-                                <img src="/img/list-style-main.png" alt="">
-                                <p class="text--secondary">Unlimited product updates</p>
+
+                            <?php 
+                $image = get_sub_field('img1');
+    
+                if(!empty($image)):
+            ?>
+            <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image['alt']); ?>">
+            <?php endif; ?>
+        
+                                 <p><?php echo get_sub_field('content3');?></p>
+                                
                             </li>
                             <li>
-                                <img src="/img/list-style-gray.png" alt="">
-                                <p class="text--secondary">1GB Cloud storage</p>
+
+                            <?php 
+                $image = get_sub_field('img1');
+    
+                if(!empty($image)):
+            ?>
+            <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image['alt']); ?>">
+            <?php endif; ?>
+        
+                                 <p><?php echo get_sub_field('content4');?></p>
+                                
                             </li>
                             <li>
-                                <img src="/img/list-style-gray.png" alt="">
-                                <p class="text--secondary">Email and community support</p>
+
+                            <?php 
+                $image = get_sub_field('img1');
+    
+                if(!empty($image)):
+            ?>
+            <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image['alt']); ?>">
+            <?php endif; ?>
+        
+                                 <p><?php echo get_sub_field('content5');?></p>
+                                
                             </li>
+                            <?php 
+
+                                endwhile;
+                                    else : 
+                                        echo "no available post yet";
+                                endif;
+                                    wp_reset_postdata();
+
+                                ?>
+   
                         </ul>
+                        <?php 
+
+                        endwhile;
+                            else : 
+                                echo "no available post yet";
+                        endif;
+                            wp_reset_postdata();
+
+                        ?>
+                                     
                         <a href="#" class="btn bg--primary">Try for free</a>
                     </div>
 
                     <div class="pricing__items p--3 my--3 bg--secondary">
-                        <h3 class="text--secondary mb--3">STANDARD</h3>
-                        <p class="t--bold mb--2">Organize across all apps by hand</p>
+                        <h3 class="text--secondary mb--3"><?php echo get_field('desc21');?></h3>
+                        <p class="t--bold mb--2"><?php echo get_field('desc22');?></p>
                         <ul class="amount text--primary d--flex justify--center align--center mb--2">
-                            <li><h4>9.99</h4></li>
+                            <li><h4><?php echo get_field('desc23');?></h4></li>
                             <li class="text--left">
-                                <p class="t--bold"><small>$</small></p>
-                                <p><small>Per Month</small></p>
+                                <p class="t--bold"><small><?php echo get_field('desc24');?></small></p>
+                                <p><small><?php echo get_field('desc25');?></small></p>
                             </li>
                         </ul>
+
+
+
+
+
+
+                        <?php
+                    $args = array(
+                        'post_type' => 'Physionics',
+                        'posts_per_page' => 5,
+                        'tax_query' => array(
+                          array(
+                            'taxonomy' => 'category',
+                            'field' => 'slug',
+                            'terms' => 'cards'
+                          )
+                        )
+                    );
+                    $newQuery = new WP_Query($args);
+                    ?>  
+    <?php if($newQuery->have_posts()) : while($newQuery->have_posts()) : $newQuery->the_post(); ?>
+    <?php if(get_field('card_contents')) :while(the_repeater_field('card_contents')):?>
                         <ul class="includes mb--3">
                             <li>
-                                <img src="/img/list-style-main.png" alt="">
-                                <p class="text--secondary">Unlimited product updates</p>
+                                <?php 
+                $image = get_sub_field('img1');
+    
+                if(!empty($image)):
+            ?>
+            <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image['alt']); ?>">
+            <?php endif; ?>
+        
+                                 <p><?php echo get_sub_field('content1');?></p>
                             </li>
                             <li>
-                                <img src="/img/list-style-main.png" alt="">
-                                <p class="text--secondary">Unlimited product updates</p>
+                                    <?php 
+                    $image = get_sub_field('img1');
+        
+                    if(!empty($image)):
+                ?>
+                <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image['alt']); ?>">
+                <?php endif; ?>
+                            <p><?php echo get_sub_field('content2');?></p>
                             </li>
                             <li>
-                                <img src="/img/list-style-main.png" alt="">
-                                <p class="text--secondary">Unlimited product updates</p>
+                            <?php 
+            $image = get_sub_field('img1');
+  
+            if(!empty($image)):
+          ?>
+          <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image['alt']); ?>">
+          <?php endif; ?>
+                            <p><?php echo get_sub_field('content3');?></p>
                             </li>
                             <li>
-                                <img src="/img/list-style-gray.png" alt="">
-                                <p class="text--secondary">1GB Cloud storage</p>
+                            <?php 
+            $image = get_sub_field('img1');
+  
+            if(!empty($image)):
+          ?>
+          <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image['alt']); ?>">
+          <?php endif; ?>
+                            <p><?php echo get_sub_field('content4');?></p>
                             </li>
                             <li>
-                                <img src="/img/list-style-gray.png" alt="">
-                                <p class="text--secondary">Email and community support</p>
+                            <?php 
+            $image = get_sub_field('img1');
+  
+            if(!empty($image)):
+          ?>
+          <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image['alt']); ?>">
+          <?php endif; ?>
+                            <p><?php echo get_sub_field('content5');?></p>
                             </li>
+                            <?php 
+
+                                endwhile;
+                                    else : 
+                                        echo "no available post yet";
+                                endif;
+                                    wp_reset_postdata();
+
+                                ?>
+
                         </ul>
+                        <?php 
+
+                        endwhile;
+                            else : 
+                                echo "no available post yet";
+                        endif;
+                            wp_reset_postdata();
+
+                        ?>
+
                         <a href="#" class="btn bg--primary">Try for free</a>
                     </div>
 
                     <div class="pricing__items p--3 my--3 bg--light">
-                        <h3 class="text--secondary mb--3">PREMIUM</h3>
-                        <p class="t--bold mb--2">Organize across all apps by hand</p>
+                        <h3 class="text--secondary mb--3"><?php echo get_field('desc31');?></h3>
+                        <p class="t--bold mb--2"><?php echo get_field('desc32');?></p>
                         <ul class="amount text--primary d--flex justify--center align--center mb--2">
-                            <li><h4>19.99</h4></li>
+                            <li><h4><?php echo get_field('desc33');?></h4></li>
                             <li class="text--left">
-                                <p class="t--bold"><small>$</small></p>
-                                <p><small>Per Month</small></p>
+                                <p class="t--bold"><small><?php echo get_field('desc34');?></small></p>
+                                <p><small><?php echo get_field('desc35');?></small></p>
                             </li>
                         </ul>
+
+
+                        <?php
+                    $args = array(
+                        'post_type' => 'Physionics',
+                        'posts_per_page' => 5,
+                        'tax_query' => array(
+                          array(
+                            'taxonomy' => 'category',
+                            'field' => 'slug',
+                            'terms' => 'cards'
+                          )
+                        )
+                    );
+                    $newQuery = new WP_Query($args);
+                    ?>  
+
+        <?php if($newQuery->have_posts()) : while($newQuery->have_posts()) : $newQuery->the_post(); ?>
+        <?php if(get_field('card_contents')) :while(the_repeater_field('card_contents')):?>
                         <ul class="includes mb--3">
                             <li>
-                                <img src="../img/list-style-main.png" alt="">
-                                <p class="text--secondary">Unlimited product updates</p>
+
+                            <?php 
+                $image = get_sub_field('img1');
+    
+                if(!empty($image)):
+            ?>
+            <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image['alt']); ?>">
+            <?php endif; ?>
+        
+                                 <p><?php echo get_sub_field('content1');?></p>
+                               
                             </li>
                             <li>
-                                <img src="/img/list-style-main.png" alt="">
-                                <p class="text--secondary">Unlimited product updates</p>
+
+                            <?php 
+                $image = get_sub_field('img1');
+    
+                if(!empty($image)):
+            ?>
+            <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image['alt']); ?>">
+            <?php endif; ?>
+        
+                                 <p><?php echo get_sub_field('content2');?></p>
+                              
                             </li>
                             <li>
-                                <img src="/img/list-style-main.png" alt="">
-                                <p class="text--secondary">Unlimited product updates</p>
+
+                            <?php 
+                $image = get_sub_field('img1');
+    
+                if(!empty($image)):
+            ?>
+            <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image['alt']); ?>">
+            <?php endif; ?>
+        
+                                 <p><?php echo get_sub_field('content3');?></p>
+                                 
                             </li>
                             <li>
-                                <img src="/img/list-style-gray.png" alt="">
-                                <p class="text--secondary">1GB Cloud storage</p>
+
+                            <?php 
+                $image = get_sub_field('img1');
+    
+                if(!empty($image)):
+            ?>
+            <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image['alt']); ?>">
+            <?php endif; ?>
+        
+                                 <p><?php echo get_sub_field('content4');?></p>
+                               
                             </li>
                             <li>
-                                <img src="/img/list-style-gray.png" alt="">
-                                <p class="text--secondary">Email and community support</p>
+
+                            <?php 
+                $image = get_sub_field('img1');
+    
+                if(!empty($image)):
+            ?>
+            <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image['alt']); ?>">
+            <?php endif; ?>
+        
+                                 <p><?php echo get_sub_field('content5');?></p>
+                             
                             </li>
+
+                            <?php 
+
+                            endwhile;
+                                else : 
+                                    echo "no available post yet";
+                            endif;
+                                wp_reset_postdata();
+
+                            ?>
                         </ul>
+
+                        <?php 
+
+                        endwhile;
+                            else : 
+                                echo "no available post yet";
+                        endif;
+                            wp_reset_postdata();
+
+                        ?>
                         <a href="#" class="btn bg--primary">Try for free</a>
                     </div>
                 </div>
@@ -488,11 +686,10 @@ Template Name: Home
             <div class="container">
                 <div class="subscribe__wrapper">
                     <div class="subscribe__intro mb--2">
-                        <h2>Get In Touch</h2>
+                        <h2><?php echo get_field('get_touch');?></h2>
                         <p class="text--light">
                             <small>
-                                The gradual accumulation of information about atomic and 
-                                small-scale behaviour during the first quarter of the 20th 
+                            <?php echo get_field('get_touch_desc');?>
                             </small>
                         </p>
                     </div>
